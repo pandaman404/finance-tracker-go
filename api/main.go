@@ -5,6 +5,7 @@ import (
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
+	"github.com/pandaman404/finance-tracker-go/internal/account"
 	"github.com/pandaman404/finance-tracker-go/internal/config"
 	"github.com/pandaman404/finance-tracker-go/internal/database"
 	"github.com/pandaman404/finance-tracker-go/internal/user"
@@ -20,11 +21,19 @@ func main() {
 
 	r := gin.Default()
 
-	repo := user.NewPostgresRepository(db)
-	service := user.NewService(repo)
-	handler := user.NewHandler(service)
+	// USER
+	userRepo := user.NewPostgresRepository(db)
+	userService := user.NewService(userRepo)
+	userHandler := user.NewHandler(userService)
 
-	handler.RegisterRoutes(r)
+	// ACCOUNT
+	accountRepo := account.NewPostgresRepository(db)
+	accountService := account.NewService(accountRepo, userRepo)
+	accountHandler := account.NewHandler(accountService)
+
+	// Routes
+	userHandler.RegisterRoutes(r)
+	accountHandler.RegisterRoutes(r)
 
 	r.Run(":" + cfg.ServerPort)
 }

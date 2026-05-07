@@ -44,6 +44,24 @@ func (h *Handler) createUser(c *gin.Context) {
 }
 
 func (h *Handler) getUsers(c *gin.Context) {
+	email := c.Query("email")
+
+	if email != "" {
+		user, err := h.service.GetUserByEmail(email)
+		if err != nil {
+			c.JSON(500, gin.H{"error": "error interno del servidor"})
+			return
+		}
+
+		if user == nil {
+			c.JSON(404, gin.H{"error": "usuario no encontrado"})
+			return
+		}
+
+		c.JSON(200, user)
+		return
+	}
+
 	users, err := h.service.GetUsers()
 	if err != nil {
 		c.JSON(500, gin.H{"error": "error interno del servidor"})

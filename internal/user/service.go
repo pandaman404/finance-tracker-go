@@ -31,7 +31,7 @@ func (s *Service) CreateUser(req CreateUserRequest) (*UserResponse, error) {
 	}
 
 	user := &User{
-		ID:           uuid.NewString(),
+		ID:           uuid.New(),
 		Name:         req.Name,
 		Email:        req.Email,
 		PasswordHash: hashedPassword,
@@ -60,7 +60,13 @@ func (s *Service) GetUsers() ([]UserResponse, error) {
 }
 
 func (s *Service) GetUserByID(id string) (*UserResponse, error) {
-	user, err := s.repo.FindByID(id)
+	parsedId, err := uuid.Parse(id)
+
+	if err != nil {
+		return nil, errors.New("id inválido")
+	}
+
+	user, err := s.repo.FindByID(parsedId)
 	if err != nil {
 		return nil, err
 	}
@@ -70,8 +76,28 @@ func (s *Service) GetUserByID(id string) (*UserResponse, error) {
 	return toResponse(user), nil
 }
 
+func (s *Service) GetUserByEmail(email string) (*UserResponse, error) {
+	user, err := s.repo.FindByEmail(email)
+
+	if err != nil {
+		return nil, err
+	}
+
+	if user == nil {
+		return nil, nil
+	}
+
+	return toResponse(user), nil
+}
+
 func (s *Service) UpdateUser(id string, req UpdateUserRequest) (*UserResponse, error) {
-	user, err := s.repo.FindByID(id)
+	parsedId, err := uuid.Parse(id)
+
+	if err != nil {
+		return nil, errors.New("id inválido")
+	}
+
+	user, err := s.repo.FindByID(parsedId)
 	if err != nil {
 		return nil, err
 	}
@@ -104,7 +130,13 @@ func (s *Service) UpdateUser(id string, req UpdateUserRequest) (*UserResponse, e
 }
 
 func (s *Service) DeleteUser(id string) (bool, error) {
-	user, err := s.repo.FindByID(id)
+	parsedId, err := uuid.Parse(id)
+
+	if err != nil {
+		return false, errors.New("id inválido")
+	}
+
+	user, err := s.repo.FindByID(parsedId)
 	if err != nil {
 		return false, err
 	}
@@ -112,7 +144,7 @@ func (s *Service) DeleteUser(id string) (bool, error) {
 		return false, nil
 	}
 
-	if err = s.repo.Delete(id); err != nil {
+	if err = s.repo.Delete(parsedId); err != nil {
 		return false, err
 	}
 
@@ -121,7 +153,7 @@ func (s *Service) DeleteUser(id string) (bool, error) {
 
 func toResponse(u *User) *UserResponse {
 	return &UserResponse{
-		ID:        u.ID,
+		ID:        u.ID.String(),
 		Name:      u.Name,
 		Email:     u.Email,
 		CreatedAt: u.CreatedAt.Format(time.RFC3339),

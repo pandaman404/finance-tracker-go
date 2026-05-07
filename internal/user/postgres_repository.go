@@ -3,6 +3,7 @@ package user
 import (
 	"errors"
 
+	"github.com/google/uuid"
 	"gorm.io/gorm"
 )
 
@@ -25,7 +26,7 @@ func (r *PostgresRepository) FindAll() ([]User, error) {
 	return users, result.Error
 }
 
-func (r *PostgresRepository) FindByID(id string) (*User, error) {
+func (r *PostgresRepository) FindByID(id uuid.UUID) (*User, error) {
 	var user User
 	result := r.db.First(&user, "id = ?", id)
 	if errors.Is(result.Error, gorm.ErrRecordNotFound) {
@@ -47,6 +48,6 @@ func (r *PostgresRepository) Update(user *User) error {
 	return r.db.Save(user).Error
 }
 
-func (r *PostgresRepository) Delete(id string) error {
+func (r *PostgresRepository) Delete(id uuid.UUID) error {
 	return r.db.Delete(&User{}, "id = ?", id).Error
 }
