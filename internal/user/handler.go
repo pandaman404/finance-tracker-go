@@ -4,6 +4,8 @@ import (
 	"strings"
 
 	"github.com/gin-gonic/gin"
+	"github.com/google/uuid"
+	"github.com/pandaman404/finance-tracker-go/internal/shared"
 )
 
 type Handler struct {
@@ -32,11 +34,11 @@ func (h *Handler) createUser(c *gin.Context) {
 
 	user, err := h.service.CreateUser(req)
 	if err != nil {
-		if strings.Contains(err.Error(), "el email ya está registrado") {
+		if strings.Contains(err.Error(), ErrEmailExists.Error()) {
 			c.JSON(409, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(500, gin.H{"error": "error interno del servidor"})
+		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 
@@ -49,12 +51,12 @@ func (h *Handler) getUsers(c *gin.Context) {
 	if email != "" {
 		user, err := h.service.GetUserByEmail(email)
 		if err != nil {
-			c.JSON(500, gin.H{"error": "error interno del servidor"})
+			c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 			return
 		}
 
 		if user == nil {
-			c.JSON(404, gin.H{"error": "usuario no encontrado"})
+			c.JSON(404, gin.H{"error": ErrNotFound.Error()})
 			return
 		}
 
@@ -64,7 +66,7 @@ func (h *Handler) getUsers(c *gin.Context) {
 
 	users, err := h.service.GetUsers()
 	if err != nil {
-		c.JSON(500, gin.H{"error": "error interno del servidor"})
+		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 
@@ -72,15 +74,20 @@ func (h *Handler) getUsers(c *gin.Context) {
 }
 
 func (h *Handler) getUserByID(c *gin.Context) {
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.JSON(400, gin.H{"error": shared.ErrInvalidID.Error()})
+		return
+	}
 
 	user, err := h.service.GetUserByID(id)
 	if err != nil {
-		c.JSON(500, gin.H{"error": "error interno del servidor"})
+		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 	if user == nil {
-		c.JSON(404, gin.H{"error": "usuario no encontrado"})
+		c.JSON(404, gin.H{"error": ErrNotFound.Error()})
 		return
 	}
 
@@ -88,7 +95,12 @@ func (h *Handler) getUserByID(c *gin.Context) {
 }
 
 func (h *Handler) updateUser(c *gin.Context) {
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.JSON(400, gin.H{"error": shared.ErrInvalidID.Error()})
+		return
+	}
 
 	var req UpdateUserRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
@@ -98,15 +110,15 @@ func (h *Handler) updateUser(c *gin.Context) {
 
 	user, err := h.service.UpdateUser(id, req)
 	if err != nil {
-		if strings.Contains(err.Error(), "el email ya está registrado") {
+		if strings.Contains(err.Error(), ErrEmailExists.Error()) {
 			c.JSON(409, gin.H{"error": err.Error()})
 			return
 		}
-		c.JSON(500, gin.H{"error": "error interno del servidor"})
+		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 	if user == nil {
-		c.JSON(404, gin.H{"error": "usuario no encontrado"})
+		c.JSON(404, gin.H{"error": ErrNotFound.Error()})
 		return
 	}
 
@@ -114,15 +126,20 @@ func (h *Handler) updateUser(c *gin.Context) {
 }
 
 func (h *Handler) deleteUser(c *gin.Context) {
-	id := c.Param("id")
+	id, err := uuid.Parse(c.Param("id"))
+
+	if err != nil {
+		c.JSON(400, gin.H{"error": shared.ErrInvalidID.Error()})
+		return
+	}
 
 	deleted, err := h.service.DeleteUser(id)
 	if err != nil {
-		c.JSON(500, gin.H{"error": "error interno del servidor"})
+		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 	if !deleted {
-		c.JSON(404, gin.H{"error": "usuario no encontrado"})
+		c.JSON(404, gin.H{"error": ErrNotFound.Error()})
 		return
 	}
 

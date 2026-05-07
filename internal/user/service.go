@@ -1,7 +1,6 @@
 package user
 
 import (
-	"errors"
 	"time"
 
 	"github.com/google/uuid"
@@ -22,7 +21,7 @@ func (s *Service) CreateUser(req CreateUserRequest) (*UserResponse, error) {
 		return nil, err
 	}
 	if existing != nil {
-		return nil, errors.New("el email ya está registrado")
+		return nil, ErrEmailExists
 	}
 
 	hashedPassword, err := hashPassword(req.Password)
@@ -59,14 +58,9 @@ func (s *Service) GetUsers() ([]UserResponse, error) {
 	return responses, nil
 }
 
-func (s *Service) GetUserByID(id string) (*UserResponse, error) {
-	parsedId, err := uuid.Parse(id)
+func (s *Service) GetUserByID(id uuid.UUID) (*UserResponse, error) {
 
-	if err != nil {
-		return nil, errors.New("id inválido")
-	}
-
-	user, err := s.repo.FindByID(parsedId)
+	user, err := s.repo.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -90,14 +84,8 @@ func (s *Service) GetUserByEmail(email string) (*UserResponse, error) {
 	return toResponse(user), nil
 }
 
-func (s *Service) UpdateUser(id string, req UpdateUserRequest) (*UserResponse, error) {
-	parsedId, err := uuid.Parse(id)
-
-	if err != nil {
-		return nil, errors.New("id inválido")
-	}
-
-	user, err := s.repo.FindByID(parsedId)
+func (s *Service) UpdateUser(id uuid.UUID, req UpdateUserRequest) (*UserResponse, error) {
+	user, err := s.repo.FindByID(id)
 	if err != nil {
 		return nil, err
 	}
@@ -111,7 +99,7 @@ func (s *Service) UpdateUser(id string, req UpdateUserRequest) (*UserResponse, e
 			return nil, err
 		}
 		if existing != nil {
-			return nil, errors.New("el email ya está registrado")
+			return nil, ErrEmailExists
 		}
 		user.Email = req.Email
 	}
@@ -129,14 +117,8 @@ func (s *Service) UpdateUser(id string, req UpdateUserRequest) (*UserResponse, e
 	return toResponse(user), nil
 }
 
-func (s *Service) DeleteUser(id string) (bool, error) {
-	parsedId, err := uuid.Parse(id)
-
-	if err != nil {
-		return false, errors.New("id inválido")
-	}
-
-	user, err := s.repo.FindByID(parsedId)
+func (s *Service) DeleteUser(id uuid.UUID) (bool, error) {
+	user, err := s.repo.FindByID(id)
 	if err != nil {
 		return false, err
 	}
@@ -144,7 +126,7 @@ func (s *Service) DeleteUser(id string) (bool, error) {
 		return false, nil
 	}
 
-	if err = s.repo.Delete(parsedId); err != nil {
+	if err = s.repo.Delete(id); err != nil {
 		return false, err
 	}
 
