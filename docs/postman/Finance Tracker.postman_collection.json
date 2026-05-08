@@ -33,7 +33,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\n\t\"name\": \"Leon S Kennedy\",\n    \"email\": \"leon@rpd.us\",\n    \"password\": \"ada123\"\n}",
+              "raw": "{\n\t\"name\": \"Ada Wong\",\n    \"email\": \"ada@umbrella.corp\",\n    \"password\": \"racc00n\"\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -92,7 +92,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users/cfd12c72-424d-4b54-91e4-cf3afcfd701c",
+              "raw": "http://localhost:8080/users/a0b84909-19fb-4304-900f-5ca62f3e4c49",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -100,7 +100,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "cfd12c72-424d-4b54-91e4-cf3afcfd701c"
+                "a0b84909-19fb-4304-900f-5ca62f3e4c49"
               ]
             }
           },
@@ -112,7 +112,7 @@
             "method": "GET",
             "header": [],
             "url": {
-              "raw": "http://localhost:8080/users?email=leon@rpd.us",
+              "raw": "http://localhost:8080/users?email=ada@umbrella.corp",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -124,7 +124,7 @@
               "query": [
                 {
                   "key": "email",
-                  "value": "leon@rpd.us"
+                  "value": "ada@umbrella.corp"
                 }
               ]
             }
@@ -146,7 +146,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/bae14a5d-c044-4061-a031-eae2633d61cb",
+              "raw": "http://localhost:8080/users/cfd12c72-424d-4b54-91e4-cf3afcfd701c",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -154,7 +154,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "bae14a5d-c044-4061-a031-eae2633d61cb"
+                "cfd12c72-424d-4b54-91e4-cf3afcfd701c"
               ]
             }
           },
@@ -175,7 +175,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/users/bae14a5d-c044-4061-a031-eae2633d61cb",
+              "raw": "http://localhost:8080/users/a0b84909-19fb-4304-900f-5ca62f3e4c49",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -183,7 +183,7 @@
               "port": "8080",
               "path": [
                 "users",
-                "bae14a5d-c044-4061-a031-eae2633d61cb"
+                "a0b84909-19fb-4304-900f-5ca62f3e4c49"
               ]
             }
           },
@@ -257,7 +257,7 @@
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"amount\": \"1000000\"\r\n}",
+              "raw": "{\r\n    \"amount\": \"-10000\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -265,7 +265,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/accounts/balance/66dfe827-c353-40b0-b461-e6765ffd4fe2",
+              "raw": "http://localhost:8080/accounts/balance/e01892bf-edc2-4803-8148-1e915011cea8",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -274,7 +274,7 @@
               "path": [
                 "accounts",
                 "balance",
-                "66dfe827-c353-40b0-b461-e6765ffd4fe2"
+                "e01892bf-edc2-4803-8148-1e915011cea8"
               ]
             }
           },
@@ -295,6 +295,120 @@
               "path": [
                 "accounts",
                 "66dfe827-c353-40b0-b461-e6765ffd4fe2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Categories",
+      "item": [
+        {
+          "name": "Get Available Categories",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n\t\"name\": \"Leon S. Kennedy\",\n    \"email\": \"leon@rpd.us\",\n    \"password\": \"ada123\"\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories/6d7748f8-36bd-468e-aee1-29e784c5d6fe",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "6d7748f8-36bd-468e-aee1-29e784c5d6fe"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Create Category",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"watapon\",\r\n    \"type\": \"income\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories/6d7748f8-36bd-468e-aee1-29e784c5d6fe",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "6d7748f8-36bd-468e-aee1-29e784c5d6fe"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Category",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"type\": \"expense\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories/73b9faee-fd57-413e-949c-441512cac677",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "73b9faee-fd57-413e-949c-441512cac677"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Category",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": ""
+            },
+            "url": {
+              "raw": "http://localhost:8080/categories/73b9faee-fd57-413e-949c-441512cac677",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "categories",
+                "73b9faee-fd57-413e-949c-441512cac677"
               ]
             }
           },

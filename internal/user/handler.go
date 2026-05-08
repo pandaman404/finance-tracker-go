@@ -28,7 +28,7 @@ func (h *Handler) createUser(c *gin.Context) {
 	var req CreateUserRequest
 
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"errors": shared.ParseValidationErrors(err)})
 		return
 	}
 
@@ -104,7 +104,7 @@ func (h *Handler) updateUser(c *gin.Context) {
 
 	var req UpdateUserRequest
 	if err := c.ShouldBindJSON(&req); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
+		c.JSON(400, gin.H{"errors": shared.ParseValidationErrors(err)})
 		return
 	}
 

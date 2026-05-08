@@ -1,4 +1,4 @@
-package account
+package category
 
 import (
 	"github.com/gin-gonic/gin"
@@ -15,14 +15,14 @@ func NewHandler(s *Service) *Handler {
 }
 
 func (h *Handler) RegisterRoutes(r *gin.Engine) {
-	r.POST("/accounts/:userID", h.createAccount)
-	r.GET("/accounts/:userID", h.getAccounts)
-	r.PUT("/accounts/balance/:accountID", h.updateBalance)
-	r.DELETE("/accounts/:accountID", h.deleteAccount)
+	r.POST("/categories/:userID", h.createCategory)
+	r.GET("/categories/:userID", h.getCategories)
+	r.PUT("/categories/:categoryID", h.updateCategory)
+	r.DELETE("/categories/:categoryID", h.deleteCategory)
 }
 
-func (h *Handler) createAccount(c *gin.Context) {
-	var req CreateAccountRequest
+func (h *Handler) createCategory(c *gin.Context) {
+	var req CreateCategoryRequest
 	userID, err := uuid.Parse(c.Param("userID"))
 
 	if err != nil {
@@ -35,18 +35,17 @@ func (h *Handler) createAccount(c *gin.Context) {
 		return
 	}
 
-	account, err := h.service.CreateAccount(userID, req)
+	category, err := h.service.CreateCategory(userID, req)
 
 	if err != nil {
 		switch err {
-		case ErrInvalidName,
-			ErrInvalidType:
+		case ErrInvalidType:
 			c.JSON(400, gin.H{"error": err.Error()})
 
 		case ErrUserNotFound:
 			c.JSON(404, gin.H{"error": err.Error()})
 
-		case ErrAccountExists:
+		case ErrCategoryExists:
 			c.JSON(409, gin.H{"error": err.Error()})
 
 		default:
@@ -55,10 +54,10 @@ func (h *Handler) createAccount(c *gin.Context) {
 		return
 	}
 
-	c.JSON(201, account)
+	c.JSON(201, category)
 }
 
-func (h *Handler) getAccounts(c *gin.Context) {
+func (h *Handler) getCategories(c *gin.Context) {
 	userID, err := uuid.Parse(c.Param("userID"))
 
 	if err != nil {
@@ -66,24 +65,24 @@ func (h *Handler) getAccounts(c *gin.Context) {
 		return
 	}
 
-	accounts, err := h.service.GetAccountsByUserID(userID)
+	categories, err := h.service.GetAvailableCategories(userID)
 
 	if err != nil {
 		c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		return
 	}
 
-	if len(accounts) == 0 {
-		c.JSON(404, gin.H{"error": ErrAccountsNotFound.Error()})
+	if len(categories) == 0 {
+		c.JSON(404, gin.H{"error": ErrCategoriesNotFound.Error()})
 		return
 	}
 
-	c.JSON(200, accounts)
+	c.JSON(200, categories)
 }
 
-func (h *Handler) updateBalance(c *gin.Context) {
-	var req UpdateAccountBalanceRequest
-	accountID, err := uuid.Parse(c.Param("accountID"))
+func (h *Handler) updateCategory(c *gin.Context) {
+	var req UpdateCategoryRequest
+	categoryID, err := uuid.Parse(c.Param("categoryID"))
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": shared.ErrInvalidID.Error()})
@@ -95,33 +94,38 @@ func (h *Handler) updateBalance(c *gin.Context) {
 		return
 	}
 
-	account, err := h.service.UpdateAccountBalance(accountID, req)
+	category, err := h.service.UpdateCategory(categoryID, req)
 
 	if err != nil {
 		switch err {
-		case ErrNotFound:
+		case ErrInvalidType:
+			c.JSON(400, gin.H{"error": err.Error()})
+
+		case ErrCategoryNotFound:
 			c.JSON(404, gin.H{"error": err.Error()})
+
 		default:
 			c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
 		}
+		return
 	}
 
-	c.JSON(200, account)
+	c.JSON(200, category)
 }
 
-func (h *Handler) deleteAccount(c *gin.Context) {
-	accountID, err := uuid.Parse(c.Param("accountID"))
+func (h *Handler) deleteCategory(c *gin.Context) {
+	categoryID, err := uuid.Parse(c.Param("categoryID"))
 
 	if err != nil {
 		c.JSON(400, gin.H{"error": shared.ErrInvalidID.Error()})
 		return
 	}
 
-	err = h.service.DeleteAccount(accountID)
+	err = h.service.DeleteCategory(categoryID)
 
 	if err != nil {
 		switch err {
-		case ErrNotFound:
+		case ErrCategoryNotFound:
 			c.JSON(404, gin.H{"error": err.Error()})
 		default:
 			c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})

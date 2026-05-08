@@ -49,5 +49,11 @@ func (r *PostgresRepository) Update(user *User) error {
 }
 
 func (r *PostgresRepository) Delete(id uuid.UUID) error {
-	return r.db.Delete(&User{}, "id = ?", id).Error
+	result := r.db.Delete(&User{}, "id = ?", id)
+
+	if result.RowsAffected == 0 {
+		return gorm.ErrRecordNotFound
+	}
+
+	return result.Error
 }
