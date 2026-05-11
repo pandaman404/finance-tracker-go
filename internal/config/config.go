@@ -2,37 +2,42 @@ package config
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
 	"os"
+	"strings"
 
 	"github.com/joho/godotenv"
 )
 
 type Config struct {
-	DBHost     string
-	DBPort     string
-	DBUser     string
-	DBPassword string
-	DBName     string
-	DBSSLMode  string
-	ServerPort string
+	DBHost             string
+	DBPort             string
+	DBUser             string
+	DBPassword         string
+	DBName             string
+	DBSSLMode          string
+	ServerPort         string
+	JWTSecret          string
+	CORSAllowedOrigins []string
 }
 
 func Load() *Config {
 	err := godotenv.Load()
 
 	if err != nil {
-		log.Println("No .env file found")
+		slog.Warn("no .env file found, using environment variables")
 	}
 
 	return &Config{
-		DBHost:     getEnv("DB_HOST", "localhost"),
-		DBPort:     getEnv("DB_PORT", "5432"),
-		DBUser:     getEnv("DB_USER", "postgres"),
-		DBPassword: getEnv("DB_PASSWORD", ""),
-		DBName:     getEnv("DB_NAME", "finance_tracker_db"),
-		DBSSLMode:  getEnv("DB_SSLMODE", "disable"),
-		ServerPort: getEnv("SERVER_PORT", "8080"),
+		DBHost:             getEnv("DB_HOST", "localhost"),
+		DBPort:             getEnv("DB_PORT", "5432"),
+		DBUser:             getEnv("DB_USER", "postgres"),
+		DBPassword:         getEnv("DB_PASSWORD", ""),
+		DBName:             getEnv("DB_NAME", "finance_tracker_db"),
+		DBSSLMode:          getEnv("DB_SSLMODE", "disable"),
+		ServerPort:         getEnv("SERVER_PORT", "8080"),
+		JWTSecret:          getEnv("JWT_SECRET", "change-me-in-production"),
+		CORSAllowedOrigins: strings.Split(getEnv("CORS_ALLOWED_ORIGINS", "http://localhost:3000"), ","),
 	}
 }
 

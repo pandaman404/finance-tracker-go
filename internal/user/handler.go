@@ -24,6 +24,32 @@ func (h *Handler) RegisterRoutes(r *gin.Engine) {
 	r.DELETE("/users/:id", h.deleteUser)
 }
 
+func (h *Handler) RegisterLoginRoute(r gin.IRouter) {
+	r.POST("/users/login", h.login)
+}
+
+func (h *Handler) login(c *gin.Context) {
+	var req LoginRequest
+
+	if err := c.ShouldBindJSON(&req); err != nil {
+		c.JSON(400, gin.H{"errors": shared.ParseValidationErrors(err)})
+		return
+	}
+
+	token, err := h.service.Login(req)
+	if err != nil {
+		switch err {
+		case ErrInvalidCredentials:
+			c.JSON(401, gin.H{"error": err.Error()})
+		default:
+			c.JSON(500, gin.H{"error": shared.ErrInternalServer.Error()})
+		}
+		return
+	}
+
+	c.JSON(200, token)
+}
+
 func (h *Handler) createUser(c *gin.Context) {
 	var req CreateUserRequest
 

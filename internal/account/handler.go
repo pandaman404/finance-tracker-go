@@ -14,7 +14,7 @@ func NewHandler(s *Service) *Handler {
 	return &Handler{service: s}
 }
 
-func (h *Handler) RegisterRoutes(r *gin.Engine) {
+func (h *Handler) RegisterRoutes(r gin.IRouter) {
 	r.POST("/accounts/:userID", h.createAccount)
 	r.GET("/accounts/:userID", h.getAccounts)
 	r.PUT("/accounts/balance/:accountID", h.updateBalance)

@@ -188,6 +188,41 @@
             }
           },
           "response": []
+        },
+        {
+          "name": "Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "6d7748f8-36bd-468e-aee1-29e784c5d6fe",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"ada@umbrella.corp\",\r\n    \"password\": \"racc00n\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/users/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "users",
+                "login"
+              ]
+            }
+          },
+          "response": []
         }
       ]
     },
@@ -200,6 +235,16 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "body": {
@@ -207,7 +252,7 @@
               "raw": "{\n\t\"name\": \"Leon S Kennedy\",\n    \"email\": \"leon@rpd.us\",\n    \"password\": \"ada123\"\n}"
             },
             "url": {
-              "raw": "http://localhost:8080/accounts/cfd12c72-424d-4b54-91e4-cf3afcfd701c",
+              "raw": "http://localhost:8080/accounts/6d7748f8-36bd-468e-aee1-29e784c5d6fe",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -215,7 +260,7 @@
               "port": "8080",
               "path": [
                 "accounts",
-                "cfd12c72-424d-4b54-91e4-cf3afcfd701c"
+                "6d7748f8-36bd-468e-aee1-29e784c5d6fe"
               ]
             }
           },
@@ -224,11 +269,21 @@
         {
           "name": "Create Account",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"Cuenta 1\",\r\n    \"type\": \"cash\",\r\n    \"balance\": 1000.55\r\n}",
+              "raw": "{\r\n    \"name\": \"Cuenta vacaciones\",\r\n    \"type\": \"cash\",\r\n    \"balance\": 10000.55\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -236,7 +291,7 @@
               }
             },
             "url": {
-              "raw": "http://localhost:8080/accounts/cfd12c72-424d-4b54-91e4-cf3afcfd701c",
+              "raw": "http://localhost:8080/accounts/6d7748f8-36bd-468e-aee1-29e784c5d6fe",
               "protocol": "http",
               "host": [
                 "localhost"
@@ -244,7 +299,7 @@
               "port": "8080",
               "path": [
                 "accounts",
-                "cfd12c72-424d-4b54-91e4-cf3afcfd701c"
+                "6d7748f8-36bd-468e-aee1-29e784c5d6fe"
               ]
             }
           },
@@ -253,6 +308,16 @@
         {
           "name": "Update Balance Account",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [],
             "body": {
@@ -283,6 +348,16 @@
         {
           "name": "Delete Account",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [],
             "url": {
@@ -311,6 +386,16 @@
             "disableBodyPruning": true
           },
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "GET",
             "header": [],
             "body": {
@@ -335,11 +420,21 @@
         {
           "name": "Create Category",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "POST",
             "header": [],
             "body": {
               "mode": "raw",
-              "raw": "{\r\n    \"name\": \"watapon\",\r\n    \"type\": \"income\"\r\n}",
+              "raw": "{\r\n    \"name\": \"watapon\",\r\n    \"type\": \"expense\"\r\n}",
               "options": {
                 "raw": {
                   "language": "json"
@@ -364,6 +459,16 @@
         {
           "name": "Update Category",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "PUT",
             "header": [],
             "body": {
@@ -393,6 +498,16 @@
         {
           "name": "Delete Category",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
             "method": "DELETE",
             "header": [],
             "body": {
@@ -409,6 +524,320 @@
               "path": [
                 "categories",
                 "73b9faee-fd57-413e-949c-441512cac677"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "Transactions",
+      "item": [
+        {
+          "name": "Create Transaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "6d7748f8-36bd-468e-aee1-29e784c5d6fe",
+                "type": "text"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"account_id\": \"f4e5c082-535a-40c6-b1e6-9d3ffce2b959\",\r\n    \"category_id\": \"951454e2-dc9c-41b6-873c-7a3da4da5580\",\r\n    \"amount\": \"100\",\r\n    \"type\": \"expense\",\r\n    \"description\": \"hola\",\r\n    \"transaction_date\": \"2026-05-10T14:30:00Z\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/transactions/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Transactions",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "X-User-ID",
+                "value": "",
+                "type": "text",
+                "disabled": true
+              }
+            ],
+            "url": {
+              "raw": "http://localhost:8080/transactions",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Expenses by category",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/transactions/expenses-by-category",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "expenses-by-category"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Summary",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/transactions/summary",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "summary"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Transactions by ID",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/transactions/c59ca26f-b37e-4563-bb07-0210b3248bf7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "c59ca26f-b37e-4563-bb07-0210b3248bf7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Update Transaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"amount\": 5000\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/transactions/c59ca26f-b37e-4563-bb07-0210b3248bf7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "c59ca26f-b37e-4563-bb07-0210b3248bf7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Delete Transaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/transactions/c59ca26f-b37e-4563-bb07-0210b3248bf7",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "c59ca26f-b37e-4563-bb07-0210b3248bf7"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Get Summary By Account",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHAiOjE3Nzg1NTIxNjIsImlhdCI6MTc3ODQ2NTc2Miwic3ViIjoiNmQ3NzQ4ZjgtMzZiZC00NjhlLWFlZTEtMjllNzg0YzVkNmZlIn0.pq3fWmo-IjkZwuwS5nNvuq9mSNxdpWiU-qYy7yBQvZ4",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/transactions/summary?account_id=f4e5c082-535a-40c6-b1e6-9d3ffce2b959",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "transactions",
+                "summary"
+              ],
+              "query": [
+                {
+                  "key": "account_id",
+                  "value": "f4e5c082-535a-40c6-b1e6-9d3ffce2b959"
+                }
               ]
             }
           },

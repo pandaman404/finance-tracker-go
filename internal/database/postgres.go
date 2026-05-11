@@ -2,7 +2,8 @@ package database
 
 import (
 	"fmt"
-	"log"
+	"log/slog"
+	"os"
 
 	"github.com/pandaman404/finance-tracker-go/internal/config"
 	"gorm.io/driver/postgres"
@@ -18,7 +19,8 @@ func NewPostgresDB(cfg *config.Config) *gorm.DB {
 	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatalf("failed to connect to database: %v", err)
+		slog.Error("failed to connect to database", "error", err)
+		os.Exit(1)
 	}
 
 	return db

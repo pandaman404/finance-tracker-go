@@ -14,7 +14,7 @@ func NewHandler(s *Service) *Handler {
 	return &Handler{service: s}
 }
 
-func (h *Handler) RegisterRoutes(r *gin.Engine) {
+func (h *Handler) RegisterRoutes(r gin.IRouter) {
 	r.POST("/categories/:userID", h.createCategory)
 	r.GET("/categories/:userID", h.getCategories)
 	r.PUT("/categories/:categoryID", h.updateCategory)

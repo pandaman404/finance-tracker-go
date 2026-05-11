@@ -3,16 +3,18 @@ package user
 import (
 	"time"
 
+	"github.com/golang-jwt/jwt/v5"
 	"github.com/google/uuid"
 	"golang.org/x/crypto/bcrypt"
 )
 
 type Service struct {
-	repo Repository
+	repo      Repository
+	jwtSecret string
 }
 
-func NewService(repo Repository) *Service {
-	return &Service{repo: repo}
+func NewService(repo Repository, jwtSecret string) *Service {
+	return &Service{repo: repo, jwtSecret: jwtSecret}
 }
 
 func (s *Service) CreateUser(req CreateUserRequest) (*UserResponse, error) {
@@ -131,6 +133,36 @@ func (s *Service) DeleteUser(id uuid.UUID) (bool, error) {
 	}
 
 	return true, nil
+}
+
+func (s *Service) Login(req LoginRequest) (*TokenResponse, error) {
+	user, err := s.repo.FindByEmail(req.Email)
+	if err != nil {
+		return nil, err
+	}
+
+	if user == nil {
+		return nil, ErrInvalidCredentials
+	}
+
+	if err = bcrypt.CompareHashAndPassword([]byte(user.PasswordHash), []byte(req.Password)); err != nil {
+		return nil, ErrInvalidCredentials
+	}
+
+	claims := jwt.MapClaims{
+		"sub": user.ID.String(),
+		"exp": time.Now().Add(24 * time.Hour).Unix(),
+		"iat": time.Now().Unix(),
+	}
+
+	token := jwt.NewWithClaims(jwt.SigningMethodHS256, claims)
+
+	signed, err := token.SignedString([]byte(s.jwtSecret))
+	if err != nil {
+		return nil, err
+	}
+
+	return &TokenResponse{Token: signed}, nil
 }
 
 func toResponse(u *User) *UserResponse {
